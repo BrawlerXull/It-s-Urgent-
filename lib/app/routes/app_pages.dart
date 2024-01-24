@@ -6,13 +6,15 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/verify/bindings/verify_binding.dart';
+import '../modules/verify/views/verify_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.VERIFY;
 
   static final routes = [
     GetPage(
@@ -22,13 +24,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () =>  LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
       name: _Paths.SIGNUP,
       page: () => const SignupView(),
       binding: SignupBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY,
+      page: () => const VerifyView(),
+      binding: VerifyBinding(),
     ),
   ];
 }

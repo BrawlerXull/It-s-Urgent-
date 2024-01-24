@@ -55,6 +55,20 @@ class SignupView extends GetView<SignupController> {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff200589),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0),
+                        ),
+                      ),
+                      onPressed: () {
+                        
+                      },
+                      child: const Text('Send OTP'),
+                    ),
+                    const SizedBox(height: 20),
                     Semantics(
                       label: 'Otp',
                       textField: true,

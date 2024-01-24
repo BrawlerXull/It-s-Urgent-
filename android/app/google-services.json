@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39061505508",
+    "project_id": "urgentitis",
+    "storage_bucket": "urgentitis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39061505508:android:422d35612a0691c6d773f1",
+        "android_client_info": {
+          "package_name": "com.itsurgent.itsurgent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_tIBF0gH-MDVUGEv_RLOeVHaUG0i3Djw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
