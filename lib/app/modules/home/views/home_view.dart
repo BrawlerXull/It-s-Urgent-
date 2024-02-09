@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:itsurgent/app/modules/home/views/contact_tile_home_page.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -11,7 +13,10 @@ class HomeView extends GetView<HomeController> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("It's Urgent"),
+          title: Text(
+            "It's Urgent",
+            style: GoogleFonts.acme(),
+          ),
           centerTitle: true,
           actions: [
             IconButton(
@@ -32,12 +37,9 @@ class HomeView extends GetView<HomeController> {
               return const Center(child: CircularProgressIndicator());
             }
             return ListView.builder(
-              itemCount: controller.contacts!.length,
-              itemBuilder: (context, i) => ListTile(
-                title: Text(controller.contacts![i].displayName),
-                subtitle: Text(controller.contacts![i].phones.first.number),
-              ),
-            );
+                itemCount: controller.contacts!.length,
+                itemBuilder: (context, i) =>
+                    ContactTileHomePage(contact: controller.contacts![i]));
           },
         ),
       ),
