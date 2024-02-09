@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:itsurgent/app/modules/signup/views/signup_view.dart';
 import 'package:pinput/pinput.dart';
-
 
 import 'package:get/get.dart';
 
@@ -8,23 +8,11 @@ import '../controllers/verify_controller.dart';
 
 class VerifyView extends GetView<VerifyController> {
   const VerifyView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
-          ),
-        ),
-        elevation: 0,
-      ),
       body: Container(
         margin: const EdgeInsets.only(left: 25, right: 25),
         alignment: Alignment.center,
@@ -55,7 +43,13 @@ class VerifyView extends GetView<VerifyController> {
               Pinput(
                 length: 6,
                 showCursor: true,
-                onCompleted: (pin) => print(pin),
+                onChanged: (value) {
+                  controller.pin.value = value;
+                },
+                onCompleted: (pin) {
+                  print("done");
+                  controller.pin.value = pin;
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -68,18 +62,16 @@ class VerifyView extends GetView<VerifyController> {
                         primary: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.verifyOtp();
+                    },
                     child: const Text("Verify Phone Number")),
               ),
               Row(
                 children: [
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          'phone',
-                          (route) => false,
-                        );
+                        Get.to(const SignupView());
                       },
                       child: const Text(
                         "Edit Phone Number ?",
@@ -92,6 +84,5 @@ class VerifyView extends GetView<VerifyController> {
         ),
       ),
     );
-
   }
 }

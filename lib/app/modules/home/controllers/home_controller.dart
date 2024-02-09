@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,10 @@ class HomeController extends GetxController {
       }
     }
     update();
+  }
+
+  Future<void> signOut() async{
+    await FirebaseAuth.instance.signOut();
   }
 
   @override

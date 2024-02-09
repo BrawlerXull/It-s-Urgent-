@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:itsurgent/app/modules/login/views/custom_input_field.dart';
-import 'package:itsurgent/app/modules/login/views/login_view.dart';
-
-import '../controllers/signup_controller.dart';
+import 'package:itsurgent/app/modules/signup/views/custom_input_field.dart';
+import 'package:itsurgent/app/modules/signup/controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   const SignupView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+
     final TextEditingController nameController = TextEditingController();
 
     return Scaffold(
@@ -50,7 +48,7 @@ class SignupView extends GetView<SignupController> {
                       label: 'Phone No',
                       textField: true,
                       child: CustomInputField(
-                        controller: emailController,
+                        controller: phoneController,
                         title: 'Phone No',
                       ),
                     ),
@@ -64,55 +62,16 @@ class SignupView extends GetView<SignupController> {
                         ),
                       ),
                       onPressed: () {
-                        
+                        controller.phoneNumber.value = phoneController.text;
+                        controller.name.value = nameController.text;
+                        controller.sendOtp();
                       },
                       child: const Text('Send OTP'),
-                    ),
-                    const SizedBox(height: 20),
-                    Semantics(
-                      label: 'Otp',
-                      textField: true,
-                      child: CustomInputField(
-                        controller: passwordController,
-                        title: 'Otp',
-                        obsecure: true,
-                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff200589),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text('Signup'),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Already have an account?',
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                  TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xff200589),
-                      ),
-                    ),
-                    onPressed: () {
-                      Get.to(const LoginView());
-                    },
-                    child: const Text('Login', style: TextStyle(fontSize: 18)),
-                  )
-                ],
-              ),
             ],
           ),
         ),
