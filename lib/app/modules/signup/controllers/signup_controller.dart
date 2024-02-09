@@ -15,15 +15,16 @@ class SignupController extends GetxController {
           print(ex);
         },
         codeSent: (String verificationId, int? resendToken) {
-  this.verificationId.value = verificationId;
-  this.resendToken.value = resendToken?.toString() ?? ""; // Convert resendToken to string and handle null
-  print(verificationId + "SendOtp");
-  Get.toNamed(Routes.VERIFY, arguments: {
-    'verificationId': verificationId,
-    'resendToken': resendToken
-  });
-},
-
+          this.verificationId.value = verificationId;
+          this.resendToken.value = resendToken?.toString() ??
+              ""; // Convert resendToken to string and handle null
+          print(verificationId + "SendOtp");
+          Get.toNamed(Routes.VERIFY, arguments: {
+            'verificationId': verificationId,
+            'resendToken': resendToken,
+            'name' : name.value
+          });
+        },
         codeAutoRetrievalTimeout: (String verificationId) {},
         phoneNumber: phoneNumber.value);
   }

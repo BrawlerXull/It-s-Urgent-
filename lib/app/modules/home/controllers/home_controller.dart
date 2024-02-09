@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   RxList<Contact>? contacts = <Contact>[].obs;
@@ -19,8 +20,13 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> signOut() async{
-    await FirebaseAuth.instance.signOut();
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Get.toNamed(Routes.SIGNUP);
+    } catch (e) {
+      print('Error signing out: $e');
+    }
   }
 
   @override
