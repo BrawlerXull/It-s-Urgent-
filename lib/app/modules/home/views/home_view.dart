@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itsurgent/app/modules/home/views/contact_tile_home_page.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -19,6 +20,12 @@ class HomeView extends GetView<HomeController> {
           ),
           centerTitle: true,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Get.toNamed(Routes.PROFILE);
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {

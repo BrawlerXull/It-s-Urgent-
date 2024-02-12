@@ -32,14 +32,16 @@ class VerifyController extends GetxController {
   final count = 0.obs;
 
   void increment() => count.value++;
-  
+
   Future<void> saveUserData(String userId, String name) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'name': name,
-      });
+        await FirebaseFirestore.instance.collection('users').doc(userId).set({
+            'name': name,
+        });
+        // print("User data saved successfully" + name + userId);
     } catch (e) {
-      print('Error saving user data: $e');
+        print('Error saving user data: $e');
     }
-  }
+}
+
 }
