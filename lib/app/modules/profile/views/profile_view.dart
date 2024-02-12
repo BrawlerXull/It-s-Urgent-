@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -43,10 +44,8 @@ class ProfileView extends GetView<ProfileController> {
                   onPressed: () {
                     String newName = nameController.text.trim();
                     String newEmail = emailController.text.trim();
-                    controller.name.value = newName;
-                    controller.email.value = newEmail;
-                    controller.updateUserData();
-                    Navigator.of(context).pop();
+                    controller.updateUserData(newName , newEmail);
+                    Get.back();
                   },
                   child: const Text('Save'),
                 ),
@@ -59,10 +58,22 @@ class ProfileView extends GetView<ProfileController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Name"),
-          Obx(() => Text(controller.name.value)),
-          const Text("Email"),
-          Obx(() => Text(controller.email.value)),
+          Text(
+            "Name",
+            style: GoogleFonts.acme(fontSize: 20),
+          ),
+          Obx(() => Text(
+                controller.name.value,
+                style: GoogleFonts.acme(fontSize: 15),
+              )),
+          Text(
+            "Email",
+            style: GoogleFonts.acme(fontSize: 20),
+          ),
+          Obx(() => Text(
+                controller.email.value,
+                style: GoogleFonts.acme(fontSize: 15),
+              )),
         ],
       ),
     );
