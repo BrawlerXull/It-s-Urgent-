@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyA9NHdMvMll5bDT6ONM4kGHGR_S_YvQ5Gk</string>
+	<string>AIzaSyB-AckKmxWe5oIQrts3SEtdH7G8jFv1Hig</string>
 	<key>GCM_SENDER_ID</key>
-	<string>42353454176</string>
+	<string>707505706692</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.itsurgent.itsurgent</string>
+	<string>com.example.itsurgent</string>
 	<key>PROJECT_ID</key>
-	<string>its-urgent-941c5</string>
+	<string>it-is-urgent</string>
 	<key>STORAGE_BUCKET</key>
-	<string>its-urgent-941c5.appspot.com</string>
+	<string>it-is-urgent.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:42353454176:ios:f5acd33fc2c9f437536705</string>
+	<string>1:707505706692:ios:eb2168fb883727cb165b91</string>
 </dict>
 </plist>

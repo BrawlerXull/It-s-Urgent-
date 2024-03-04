@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC_tIBF0gH-MDVUGEv_RLOeVHaUG0i3Djw',
-    appId: '1:39061505508:android:422d35612a0691c6d773f1',
-    messagingSenderId: '39061505508',
-    projectId: 'urgentitis',
-    storageBucket: 'urgentitis.appspot.com',
+    apiKey: 'AIzaSyC7-TYne6V6DMHEfXdssx2i-T0QwfDjxu0',
+    appId: '1:707505706692:android:befeb7d5bbf940ac165b91',
+    messagingSenderId: '707505706692',
+    projectId: 'it-is-urgent',
+    storageBucket: 'it-is-urgent.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyB-AckKmxWe5oIQrts3SEtdH7G8jFv1Hig',
+    appId: '1:707505706692:ios:eb2168fb883727cb165b91',
+    messagingSenderId: '707505706692',
+    projectId: 'it-is-urgent',
+    storageBucket: 'it-is-urgent.appspot.com',
+    iosBundleId: 'com.example.itsurgent',
   );
 }

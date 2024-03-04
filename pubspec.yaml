@@ -16,6 +16,9 @@ dependencies:
   pinput: ^3.0.1
   cloud_firestore: ^4.15.4
   google_fonts: ^6.1.0
+  firebase_messaging: ^14.7.15
+  flutter_local_notifications: ^16.3.2
+  app_settings: ^5.1.1
   
 
 dev_dependencies: 
