@@ -19,19 +19,17 @@ class HomeController extends GetxController {
   RxList<Contact>? contacts = <Contact>[].obs;
   RxBool permissionDenied = false.obs;
 
-  Future<void> fetchContacts() async {
+  void fetchContacts() async {
     final hasPermission = await contactService.requestPermission();
     permissionDenied.value = !hasPermission;
 
-    if (!hasPermission) {
-      return; 
+    if (hasPermission) {
+      contacts!.value = await contactService.fetchContacts();
+      update();
     }
-
-    contacts!.value = await contactService.fetchContacts();
-    update();
   }
 
-  Future<void> signOut() async {
+  void signOut() {
     authenticationService.signOut();
     Get.toNamed(Routes.SIGNUP);
   }
@@ -40,7 +38,7 @@ class HomeController extends GetxController {
     return notificationService.getDeviceToken();
   }
 
-  Future<void> updateUserFCMToken(String fcmToken) async {
+  void updateUserFCMToken(String fcmToken) {
     firestoreService.updateUserFCMToken(fcmToken);
   }
 
