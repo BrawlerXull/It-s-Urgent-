@@ -5,11 +5,17 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:itsurgent/app/routes/app_pages.dart';
 import 'package:itsurgent/app/services/firebase_authentication_service.dart';
+import 'package:itsurgent/app/services/firestore_service.dart';
+import 'package:itsurgent/app/services/notification_service.dart';
 
 class HomeController extends GetxController {
   late final AuthenticationService authenticationService;
+  late final NotificationService notificationService;
+  late final FirestoreService firestoreService;
   HomeController() {
     authenticationService = AuthenticationService();
+    notificationService = NotificationService();
+    firestoreService = FirestoreService();
   }
   RxList<Contact>? contacts = <Contact>[].obs;
   RxBool permissionDenied = false.obs;
@@ -32,55 +38,19 @@ class HomeController extends GetxController {
     Get.toNamed(Routes.SIGNUP);
   }
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  void requestNotificationPermission() async {
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: true,
-      criticalAlert: true,
-      badge: true,
-      sound: true,
-      provisional: true,
-      carPlay: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print("User gave permission");
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print("User gave provisinal permission");
-    } else {
-      print("User denied the permission");
-    }
-  }
-
   Future<String> getDeviceToken() async {
-    String? token = await messaging.getToken();
-    return token!;
+    return notificationService.getDeviceToken();
   }
 
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
-  Future<void> updateUserData(String fcmToken) async {
-    final userId = _auth.currentUser?.uid;
-    if (userId == null) {
-      throw Exception('User is not logged in.');
-    }
-    await _firestore.collection('users').doc(userId).update({
-      'fcmToken': fcmToken,
-    }).then((value) {
-      print("FCM Updated");
-    });
+  Future<void> updateUserFCMToken(String fcmToken) async {
+    firestoreService.updateUserFCMToken(fcmToken);
   }
 
   @override
   void onInit() {
     super.onInit();
-    requestNotificationPermission();
     getDeviceToken().then((value) {
-      print("Device Token");
-      print(value);
-      updateUserData(value);
+      updateUserFCMToken(value);
     });
     fetchContacts();
   }
