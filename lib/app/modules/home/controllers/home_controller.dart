@@ -4,8 +4,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:itsurgent/app/routes/app_pages.dart';
+import 'package:itsurgent/app/services/firebase_authentication_service.dart';
 
 class HomeController extends GetxController {
+  late final AuthenticationService authenticationService;
+  HomeController() {
+    authenticationService = AuthenticationService();
+  }
   RxList<Contact>? contacts = <Contact>[].obs;
   RxBool permissionDenied = false.obs;
 
@@ -23,12 +28,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      Get.toNamed(Routes.SIGNUP);
-    } catch (e) {
-      print('Error signing out: $e');
-    }
+    authenticationService.signOut();
+    Get.toNamed(Routes.SIGNUP);
   }
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;

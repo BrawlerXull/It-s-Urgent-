@@ -23,6 +23,14 @@ class AuthenticationService {
         phoneNumber: phoneNumber);
   }
 
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      print('Error signing out: $e');
+    }
+  }
+
   Future<UserCredential> verifyOtp(dynamic arguments, String pin) async {
     try {
       if (arguments == null || arguments['verificationId'] == null) {
