@@ -1,20 +1,18 @@
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:get/get.dart';
 
 class ContactService {
-  List<Contact>? contacts = <Contact>[].obs;
-  bool permissionDenied = false;
+  Future<bool> requestPermission() async {
+    return await FlutterContacts.requestPermission(readonly: true);
+  }
 
-  Future<List<Contact>?> fetchContacts() async {
-    if (!await FlutterContacts.requestPermission(readonly: true)) {
-      permissionDenied = true;
-    } else {
-      final fetchedContacts = await FlutterContacts.getContacts();
-      contacts = fetchedContacts;
-      for (int i = 0; i < contacts!.length; i++) {
-        contacts![i] = (await FlutterContacts.getContact(contacts![i].id))!;
-      }
+  Future<List<Contact>> fetchContacts() async {
+    final fetchedContacts = await FlutterContacts.getContacts();
+    final List<Contact> contacts = [];
+
+    for (final contact in fetchedContacts) {
+      contacts.add((await FlutterContacts.getContact(contact.id))!);
     }
+
     return contacts;
   }
 }
