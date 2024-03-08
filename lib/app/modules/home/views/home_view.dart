@@ -46,7 +46,7 @@ class HomeView extends GetView<HomeController> {
             return ListView.builder(
                 itemCount: controller.contacts!.length,
                 itemBuilder: (context, i) =>
-                    ContactTileHomePage(contact: controller.contacts![i]));
+                    ContactTileHomePage(contact: controller.contacts![i],onTap: controller.makePhoneCall,));
           },
         ),
       ),

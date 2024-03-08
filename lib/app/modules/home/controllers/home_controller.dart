@@ -8,12 +8,14 @@ class HomeController extends GetxController {
   late final NotificationService notificationService;
   late final FirestoreService firestoreService;
   late final ContactService contactService;
+  late final CallingService callingService;
 
   HomeController() {
     authenticationService = AuthenticationService();
     notificationService = NotificationService();
     firestoreService = FirestoreService();
     contactService = ContactService();
+    callingService = CallingService();
   }
 
   RxList<Contact>? contacts = <Contact>[].obs;
@@ -40,6 +42,10 @@ class HomeController extends GetxController {
 
   void updateUserFCMToken(String fcmToken) {
     firestoreService.updateUserFCMToken(fcmToken);
+  }
+
+  void makePhoneCall() {
+    callingService.makePhoneCall();
   }
 
   @override
