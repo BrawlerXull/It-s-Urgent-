@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:itsurgent/app/modules/home/views/contact_tile_home_page.dart';
+import 'package:itsurgent/app/modules/home/views/home_page_contact_tile.dart';
 import 'package:itsurgent/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
