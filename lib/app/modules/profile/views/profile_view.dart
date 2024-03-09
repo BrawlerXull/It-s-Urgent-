@@ -11,19 +11,23 @@ class ProfileView extends GetView<ProfileController> {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     return Scaffold(
-      floatingActionButton: ProfilePageFloatingActionButton(
-        onPressedSave: () {
-          controller.updateUserData(
-            nameController.text.trim(),
-            emailController.text.trim(),
-          );
-          Get.back();
-        },
-        onPressedCancel: () {
-          Get.back();
-        },
-        nameController: nameController,
-        emailController: emailController,
+      floatingActionButton: Obx(
+        () => ProfilePageFloatingActionButton(
+          onPressedSave: () {
+            controller.updateUserData(nameController.text.trim(),
+                emailController.text.trim(), controller.urgencyStatus.value);
+            Get.back();
+          },
+          onPressedCancel: () {
+            Get.back();
+          },
+          nameController: nameController,
+          emailController: emailController,
+          urgencyStatus: controller.urgencyStatus.value,
+          onDropDownChanged: (int? value) {
+            controller.urgencyStatus.value = value!;
+          },
+        ),
       ),
       body: Obx(
         () => Column(

@@ -12,7 +12,7 @@ class FirestoreService {
       await _firestore.collection('users').doc(userId).set({'name': name});
     } catch (e) {
       print('Error saving user data: $e');
-      rethrow; 
+      rethrow;
     }
   }
 
@@ -51,7 +51,8 @@ class FirestoreService {
     }
   }
 
-  Future<void> updateUserData(String newName, String newEmail) async {
+  Future<void> updateUserData(
+      String newName, String newEmail, int urgencyStatus) async {
     final userId = _auth.currentUser?.uid;
     if (userId == null) {
       throw Exception('User is not logged in.');
@@ -60,10 +61,11 @@ class FirestoreService {
       await _firestore.collection('users').doc(userId).update({
         'name': newName,
         'email': newEmail,
+        'urgencyStatus': urgencyStatus,
       });
     } catch (e) {
       print('Error updating user data: $e');
-      rethrow; 
+      rethrow;
     }
   }
 }
