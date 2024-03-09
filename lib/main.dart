@@ -16,11 +16,12 @@ void main() async {
   User? user = FirebaseAuth.instance.currentUser;
 
   runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: user != null ? Routes.HOME : Routes.SIGNUP, 
-      getPages: AppPages.routes,
-
+    SafeArea(
+      child: GetMaterialApp(
+        title: "Application",
+        initialRoute: user != null ? Routes.HOME : Routes.SIGNUP,
+        getPages: AppPages.routes,
+      ),
     ),
   );
 }

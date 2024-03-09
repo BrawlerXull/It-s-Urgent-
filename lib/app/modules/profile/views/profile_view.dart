@@ -1,80 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:itsurgent/app/modules/profile/views/profile_page_floating_action_button.dart';
+import 'package:itsurgent/app/modules/profile/views/profile_page_info_tile.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Edit Profile'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: nameController,
-                    decoration: const InputDecoration(labelText: 'Name'),
-                  ),
-                  TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    String newName = nameController.text.trim();
-                    String newEmail = emailController.text.trim();
-                    controller.updateUserData(newName , newEmail);
-                    Get.back();
-                  },
-                  child: const Text('Save'),
-                ),
-              ],
-            ),
+      floatingActionButton: ProfilePageFloatingActionButton(
+        onPressedSave: () {
+          controller.updateUserData(
+            nameController.text.trim(),
+            emailController.text.trim(),
           );
+          Get.back();
         },
-        child: const Icon(Icons.edit),
+        onPressedCancel: () {
+          Get.back();
+        },
+        nameController: nameController,
+        emailController: emailController,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Name",
-            style: GoogleFonts.acme(fontSize: 20),
-          ),
-          Obx(() => Text(
-                controller.name.value,
-                style: GoogleFonts.acme(fontSize: 15),
-              )),
-          Text(
-            "Email",
-            style: GoogleFonts.acme(fontSize: 20),
-          ),
-          Obx(() => Text(
-                controller.email.value,
-                style: GoogleFonts.acme(fontSize: 15),
-              )),
-        ],
+      body: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Align(
+              child: Icon(
+                Icons.person,
+                size: 80,
+              ),
+            ),
+            ProfilePageInfoTile(title: "Name", value: controller.name.value),
+            ProfilePageInfoTile(title: "Email", value: controller.email.value),
+          ],
+        ),
       ),
     );
   }
