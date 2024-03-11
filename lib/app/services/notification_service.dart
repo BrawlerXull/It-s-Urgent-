@@ -7,7 +7,6 @@ class NotificationService {
   NotificationService() {
     _messaging = FirebaseMessaging.instance;
     requestPermission();
-    getDeviceToken();
   }
 
   Future<void> requestPermission() async {
@@ -34,5 +33,11 @@ class NotificationService {
   Future<String> getDeviceToken() async {
     final token = await _messaging.getToken();
     return token!;
+  }
+
+  void firebaseInit() {
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message.notification!.title.toString());
+    });
   }
 }

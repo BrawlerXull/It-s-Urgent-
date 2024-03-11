@@ -17,7 +17,7 @@ dependencies:
   cloud_firestore: ^4.15.4
   google_fonts: ^6.1.0
   firebase_messaging: ^14.7.15
-  flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^17.0.0
   app_settings: ^5.1.1
   flutter_phone_direct_caller: ^2.1.1
   

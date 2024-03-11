@@ -48,10 +48,15 @@ class HomeController extends GetxController {
     callingService.makePhoneCall();
   }
 
+  void firebaseInit() {
+    notificationService.firebaseInit();
+  }
+
   @override
   void onInit() {
     super.onInit();
     getDeviceToken().then(updateUserFCMToken);
+    firebaseInit();
     fetchContacts();
   }
 }
