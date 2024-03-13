@@ -13,43 +13,45 @@ class HomeView extends GetView<HomeController> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "It's Urgent",
-            style: GoogleFonts.acme(),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                Get.toNamed(Routes.PROFILE);
-              },
+          appBar: AppBar(
+            title: Text(
+              "It's Urgent",
+              style: GoogleFonts.acme(),
             ),
-            IconButton(
-              icon: const Icon(Icons.exit_to_app),
-              onPressed: () {
-                controller.signOut();
-              },
-            )
-          ],
-          automaticallyImplyLeading: false,
-        ),
-        body: GetBuilder<HomeController>(
-          builder: (controller) {
-            if (controller.permissionDenied.value) {
-              return const Center(child: Text('Permission denied'));
-            }
-            if (controller.contacts == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return ListView.builder(
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.person),
+                onPressed: () {
+                  Get.toNamed(Routes.PROFILE);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.exit_to_app),
+                onPressed: () {
+                  controller.signOut();
+                },
+              )
+            ],
+            automaticallyImplyLeading: false,
+          ),
+          body: GetBuilder<HomeController>(
+            builder: (controller) {
+              if (controller.permissionDenied.value) {
+                return const Center(child: Text('Permission denied'));
+              }
+              if (controller.contacts == null) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
                 itemCount: controller.contacts!.length,
-                itemBuilder: (context, i) =>
-                    ContactTileHomePage(contact: controller.contacts![i],onTap: controller.makePhoneCall,));
-          },
-        ),
-      ),
+                itemBuilder: (context, i) => ContactTileHomePage(
+                  contact: controller.contacts![i],
+                  onTap: controller.makePhoneCall,
+                ),
+              );
+            },
+          )),
     );
   }
 }
