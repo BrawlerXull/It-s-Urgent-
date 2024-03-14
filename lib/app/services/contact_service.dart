@@ -9,8 +9,17 @@ class ContactService {
     final fetchedContacts = await FlutterContacts.getContacts();
     final List<Contact> contacts = [];
 
+    final List<Future<Contact?>> contactFutures = [];
     for (final contact in fetchedContacts) {
-      contacts.add((await FlutterContacts.getContact(contact.id))!);
+      contactFutures.add(FlutterContacts.getContact(contact.id));
+    }
+
+    final List<Contact?> resolvedContacts = await Future.wait(contactFutures);
+
+    for (final contact in resolvedContacts) {
+      if (contact != null) {
+        contacts.add(contact);
+      }
     }
 
     return contacts;
