@@ -1,13 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:itsurgent/app/modules/signup/views/signup_view.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/verify_controller.dart';
 
 class VerifyView extends GetView<VerifyController> {
-  const VerifyView({Key? key}) : super(key: key);
+  const VerifyView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +59,22 @@ class VerifyView extends GetView<VerifyController> {
                 height: 45,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.green.shade600,
+                        backgroundColor: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
                       controller.verifyOtp();
                     },
-                    child: const Text("Verify Phone Number")),
+                    child: const Text(
+                      "Verify Phone Number",
+                      style: TextStyle(color: Colors.white),
+                    )),
               ),
               Row(
                 children: [
                   TextButton(
                       onPressed: () {
-                        Get.to(const SignupView());
+                        Get.toNamed(Routes.SIGNUP);
                       },
                       child: const Text(
                         "Edit Phone Number ?",
