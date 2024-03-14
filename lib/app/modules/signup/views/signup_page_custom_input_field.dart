@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class CustomInputField extends StatefulWidget {
+class SignUpPageCustomInputField extends StatefulWidget {
   final TextEditingController controller;
   final String title;
   final bool obsecure;
 
-  const CustomInputField({
+  const SignUpPageCustomInputField({
     required this.controller,
     required this.title,
     this.obsecure = false,
   });
 
   @override
-  _CustomInputFieldState createState() => _CustomInputFieldState();
+  _SignUpPageCustomInputFieldState createState() => _SignUpPageCustomInputFieldState();
 }
 
-class _CustomInputFieldState extends State<CustomInputField> {
+class _SignUpPageCustomInputFieldState extends State<SignUpPageCustomInputField> {
   bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {

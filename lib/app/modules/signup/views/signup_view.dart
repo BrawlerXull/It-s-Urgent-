@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:itsurgent/app/modules/signup/views/custom_input_field.dart';
+import 'package:itsurgent/app/modules/signup/views/signup_page_custom_input_field.dart';
 import 'package:itsurgent/app/modules/signup/controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
@@ -38,7 +38,7 @@ class SignupView extends GetView<SignupController> {
                     Semantics(
                       label: 'Name',
                       textField: true,
-                      child: CustomInputField(
+                      child: SignUpPageCustomInputField(
                         controller: nameController,
                         title: 'Name',
                       ),
@@ -47,7 +47,7 @@ class SignupView extends GetView<SignupController> {
                     Semantics(
                       label: 'Phone No',
                       textField: true,
-                      child: CustomInputField(
+                      child: SignUpPageCustomInputField(
                         controller: phoneController,
                         title: 'Phone No',
                       ),
