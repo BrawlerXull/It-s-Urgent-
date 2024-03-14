@@ -17,10 +17,7 @@ class FirestoreService {
   }
 
   Future<void> updateUserFCMToken(String fcmToken) async {
-    final userId = _auth.currentUser?.uid;
-    if (userId == null) {
-      throw Exception('User is not logged in.');
-    }
+    final userId = _getCurrentUserId();
     try {
       await _firestore.collection('users').doc(userId).update({
         'fcmToken': fcmToken,
@@ -33,10 +30,7 @@ class FirestoreService {
   }
 
   Future<Map<String, dynamic>> getUserData() async {
-    final userId = _auth.currentUser?.uid;
-    if (userId == null) {
-      throw Exception('User is not logged in.');
-    }
+    final userId = _getCurrentUserId();
     try {
       final userSnapshot =
           await _firestore.collection('users').doc(userId).get();
@@ -53,10 +47,7 @@ class FirestoreService {
 
   Future<void> updateUserData(
       String newName, String newEmail, int urgencyStatus) async {
-    final userId = _auth.currentUser?.uid;
-    if (userId == null) {
-      throw Exception('User is not logged in.');
-    }
+    final userId = _getCurrentUserId();
     try {
       await _firestore.collection('users').doc(userId).update({
         'name': newName,
@@ -67,5 +58,13 @@ class FirestoreService {
       print('Error updating user data: $e');
       rethrow;
     }
+  }
+
+  String _getCurrentUserId() {
+    final userId = _auth.currentUser?.uid;
+    if (userId == null) {
+      throw Exception('User is not logged in.');
+    }
+    return userId;
   }
 }
