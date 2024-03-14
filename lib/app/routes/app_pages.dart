@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/message/bindings/message_binding.dart';
+import '../modules/message/views/message_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.MESSAGE,
+      page: () => const MessageView(),
+      binding: MessageBinding(),
     ),
   ];
 }

@@ -1,13 +1,20 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:get/get.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 
 class ContactTileHomePage extends StatelessWidget {
   final Contact contact;
   final void Function()? onTap;
 
-  const ContactTileHomePage(
-      {required this.contact, required this.onTap, super.key});
+  const ContactTileHomePage({
+    required this.contact,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +32,10 @@ class ContactTileHomePage extends StatelessWidget {
         onTap: onTap,
         child: const Icon(Icons.call),
       ),
+      onTap: () {
+        print("ok");
+        Get.toNamed(Routes.MESSAGE, arguments: {'contact': contact});
+      },
     );
   }
 }
