@@ -1,32 +1,28 @@
 // ignore_for_file: avoid_print, use_rethrow_when_possible
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<Map<String, dynamic>> signUp(String name, String phoneNumber) async {
-    late String verificationId;
-    late int? resendToken;
-
+  void signUp(String name, String phoneNumber) async {
     await _auth.verifyPhoneNumber(
-      verificationCompleted: (PhoneAuthCredential credentials) {},
-      verificationFailed: (FirebaseAuthException ex) {
-        print(ex);
-      },
-      codeSent: (String verId, int? token) {
-        verificationId = verId;
-        resendToken = token;
-        print("${verificationId}SendOtp");
-      },
-      codeAutoRetrievalTimeout: (String verId) {},
-      phoneNumber: phoneNumber,
-    );
-
-    return {
-      'verificationId': verificationId,
-      'resendToken': resendToken,
-    };
+        verificationCompleted: (PhoneAuthCredential credentials) {},
+        verificationFailed: (FirebaseAuthException ex) {
+          print(ex);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          print("$verificationId SendOtp");
+          Get.toNamed(Routes.VERIFY, arguments: {
+            'verificationId': verificationId,
+            'resendToken': resendToken,
+            'name': name
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+        phoneNumber: phoneNumber);
   }
 
   Future<void> signOut() async {
