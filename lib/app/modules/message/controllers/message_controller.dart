@@ -8,13 +8,13 @@ class MessageController extends GetxController {
   final RxString contactNumber = RxString('');
   RxInt urgencyRatingValue = 1.obs;
   late final FirestoreService firestoreService;
-  late final NotificationService notificationService;
+  late final FirebaseNotificaionService firebaseNotificaionService;
   final RxBool isServiceOn = RxBool(false);
   final RxBool doesUserExists = RxBool(false);
 
   MessageController() {
     firestoreService = FirestoreService();
-    notificationService = NotificationService();
+    firebaseNotificaionService = FirebaseNotificaionService();
   }
 
   void initialiseInformation() async {
@@ -42,7 +42,7 @@ class MessageController extends GetxController {
             await firestoreService.getFCMToken(contactNumber.value);
 
         if (fcmToken != null) {
-          await notificationService.sendMessage(
+          await firebaseNotificaionService.sendMessage(
               fcmToken, message, getUrgencyStatus(urgencyRatingValue.value));
         } else {
           print(

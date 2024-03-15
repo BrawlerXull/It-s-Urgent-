@@ -5,7 +5,7 @@ import 'package:itsurgent/app/services/services.dart';
 
 class HomeController extends GetxController {
   late final AuthenticationService authenticationService;
-  late final NotificationService notificationService;
+  late final FirebaseNotificaionService firebaseNotificaionService;
   late final FirestoreService firestoreService;
   late final ContactService contactService;
   late final CallingService callingService;
@@ -13,7 +13,7 @@ class HomeController extends GetxController {
 
   HomeController() {
     authenticationService = AuthenticationService();
-    notificationService = NotificationService();
+    firebaseNotificaionService = FirebaseNotificaionService();
     firestoreService = FirestoreService();
     contactService = ContactService();
     callingService = CallingService();
@@ -39,7 +39,7 @@ class HomeController extends GetxController {
   }
 
   Future<String> getDeviceToken() async {
-    return notificationService.getDeviceToken();
+    return firebaseNotificaionService.getDeviceToken();
   }
 
   void updateUserFCMToken(String fcmToken) {
