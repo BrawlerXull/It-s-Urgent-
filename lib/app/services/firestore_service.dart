@@ -94,6 +94,21 @@ class FirestoreService {
     return false;
   }
 
+  Future<bool> checkIfUserExists(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking if user exists: $e');
+      return false;
+    }
+  }
+
   Future<String?> getFCMToken(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {

@@ -48,9 +48,11 @@ class MessageView extends GetView<MessageController> {
               Obx(
                 () => CustomTileMessagePage(
                   title: "Send Urgent Notification",
-                  subTitle: controller.isServiceOn.value
-                      ? "Tap to send"
-                      : 'User has turned off the services',
+                  subTitle: controller.doesUserExists.value
+                      ? (controller.isServiceOn.value
+                          ? "Tap to send"
+                          : 'User has turned off the services')
+                      : 'User does not exist',
                   icon: Icons.notifications_active,
                   onTap: () {
                     showDialog(

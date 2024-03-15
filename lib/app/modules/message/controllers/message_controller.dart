@@ -10,6 +10,7 @@ class MessageController extends GetxController {
   late final FirestoreService firestoreService;
   late final NotificationService notificationService;
   final RxBool isServiceOn = RxBool(false);
+  final RxBool doesUserExists = RxBool(false);
 
   MessageController() {
     firestoreService = FirestoreService();
@@ -24,6 +25,8 @@ class MessageController extends GetxController {
       contactNumber.value =
           contact.phones.isNotEmpty ? contact.phones.first.number : '';
     }
+    doesUserExists.value =
+        await firestoreService.checkIfUserExists(contactNumber.value);
     isServiceOn.value =
         await firestoreService.checkIfServiceOn(contactNumber.value);
     if (kDebugMode) {
