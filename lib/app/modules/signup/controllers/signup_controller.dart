@@ -17,6 +17,7 @@ class SignupController extends GetxController {
     try {
       final data =
           await authenticationService.signUp(name.value, phoneNumber.value);
+      data['phoneNumber'] = phoneNumber.value;
       Get.toNamed(Routes.VERIFY, arguments: data);
     } catch (e) {
       print('Error sending otp : $e');

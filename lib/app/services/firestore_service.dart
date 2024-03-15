@@ -7,9 +7,12 @@ class FirestoreService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> saveUserData(String userId, String name) async {
+  Future<void> saveUserData(String userId, String name , String phoneNumber) async {
     try {
-      await _firestore.collection('users').doc(userId).set({'name': name});
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .set({'name': name, 'service': true,'phoneNumber':phoneNumber});
     } catch (e) {
       print('Error saving user data: $e');
       rethrow;
@@ -67,4 +70,30 @@ class FirestoreService {
     }
     return userId;
   }
+
+  Future<void> checkIfServiceOn(String phoneNumber) async {
+  try {
+    final QuerySnapshot querySnapshot = await _firestore
+        .collection('users')
+        .where('phoneNumber', isEqualTo: phoneNumber)
+        .get();
+    if (querySnapshot.docs.isNotEmpty) {
+      final userDocument = querySnapshot.docs.first;
+      final bool isServiceOn = userDocument['service'];
+      print('Service status for $phoneNumber: $isServiceOn');
+    } else {
+      print('User not found for phone number: $phoneNumber');
+    }
+  } catch (e) {
+    print('Error checking service status: $e');
+    rethrow;
+  }
+}
+
+  Future<void> sendMessage(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+    checkIfServiceOn(phoneNumber);
+  }
+
+
 }

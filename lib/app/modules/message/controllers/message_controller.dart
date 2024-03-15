@@ -1,11 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import 'package:itsurgent/app/services/services.dart';
 
 class MessageController extends GetxController {
   final RxString contactName = RxString('');
   final RxString contactNumber = RxString('');
   RxInt urgencyRatingValue = 1.obs;
+  late final FirestoreService firestoreService;
+
+  MessageController() {
+    firestoreService = FirestoreService();
+  }
 
   void initialiseInformation() {
     final dynamic arguments = Get.arguments;
@@ -19,6 +25,10 @@ class MessageController extends GetxController {
       print(contactName.value);
       print(contactNumber.value);
     }
+  }
+
+  void sendMessage() {
+    firestoreService.sendMessage(contactNumber.value);
   }
 
   @override

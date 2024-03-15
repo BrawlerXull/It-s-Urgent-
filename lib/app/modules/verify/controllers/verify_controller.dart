@@ -19,7 +19,7 @@ class VerifyController extends GetxController {
     UserCredential userCredential =
         await authenticationService.verifyOtp(Get.arguments, pin.value);
     firestoreService.saveUserData(
-        userCredential.user!.uid, Get.arguments['name']);
+        userCredential.user!.uid, Get.arguments['name'],Get.arguments['phoneNumber']);
     Get.toNamed(Routes.HOME);
   }
 }

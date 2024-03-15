@@ -93,7 +93,7 @@ class MessageView extends GetView<MessageController> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              controller.sendMessage();
                             },
                             child: const Text('Send'),
                           ),
