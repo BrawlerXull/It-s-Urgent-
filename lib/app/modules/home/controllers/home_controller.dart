@@ -9,6 +9,7 @@ class HomeController extends GetxController {
   late final FirestoreService firestoreService;
   late final ContactService contactService;
   late final CallingService callingService;
+  late final LocalNotificationService localNotificationService;
 
   HomeController() {
     authenticationService = AuthenticationService();
@@ -16,6 +17,7 @@ class HomeController extends GetxController {
     firestoreService = FirestoreService();
     contactService = ContactService();
     callingService = CallingService();
+    localNotificationService = LocalNotificationService();
   }
 
   RxList<Contact>? contacts = <Contact>[].obs;
@@ -49,7 +51,7 @@ class HomeController extends GetxController {
   }
 
   void firebaseInit() {
-    notificationService.firebaseInit();
+    localNotificationService.firebaseInit();
   }
 
   @override
