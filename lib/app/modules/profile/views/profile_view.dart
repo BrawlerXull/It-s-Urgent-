@@ -11,6 +11,14 @@ class ProfileView extends GetView<ProfileController> {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
       floatingActionButton: Obx(
         () => ProfilePageFloatingActionButton(
           onPressedSave: () {
