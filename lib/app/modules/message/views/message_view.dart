@@ -11,9 +11,9 @@ class MessageView extends GetView<MessageController> {
     final TextEditingController messageController = TextEditingController();
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
           const SizedBox(
             height: 50,
           ),
@@ -79,7 +79,15 @@ class MessageView extends GetView<MessageController> {
                                         ? 'Medium'
                                         : 'High'),
                               ),
-                            )
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Low'),
+                                Text('Medium'),
+                                Text('High'),
+                              ],
+                            ),
                           ],
                         ),
                         actions: [
@@ -121,7 +129,7 @@ class MessageView extends GetView<MessageController> {
               ),
             ],
           )
-          
+
           // Row(
           //   children: [
           //     RawMaterialButton(
@@ -137,8 +145,8 @@ class MessageView extends GetView<MessageController> {
           //     ),
           //   ],
           // )
-                ],
-              ),
-        ));
+        ],
+      ),
+    ));
   }
 }
