@@ -40,7 +40,6 @@ class MessageController extends GetxController {
       if (isServiceOn.value) {
         String? fcmToken =
             await firestoreService.getFCMToken(contactNumber.value);
-
         if (fcmToken != null) {
           int? urgencyStatus =
               await firestoreService.getUrgencyStatus(contactNumber.value);
@@ -48,7 +47,9 @@ class MessageController extends GetxController {
               urgencyStatus <= urgencyRatingValue.value) {
             await firebaseNotificaionService.sendMessage(fcmToken, message,
                 getUrgencyStatusFromRating(urgencyRatingValue.value));
+                Get.snackbar('Done !','The notification has be successfully sent');
           } else {
+            Get.snackbar('Error !','User is in more urgent meeting.');
             print("Urgency too low to send notification.");
           }
         } else {
