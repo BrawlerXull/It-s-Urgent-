@@ -9,13 +9,14 @@ class MessageController extends GetxController {
   RxInt urgencyRatingValue = 1.obs;
   late final FirestoreService firestoreService;
   late final NotificationService notificationService;
+  final RxBool isServiceOn = RxBool(false);
 
   MessageController() {
     firestoreService = FirestoreService();
     notificationService = NotificationService();
   }
 
-  void initialiseInformation() {
+  void initialiseInformation() async {
     final dynamic arguments = Get.arguments;
     if (arguments != null && arguments['contact'] != null) {
       final Contact contact = arguments['contact'];
@@ -23,6 +24,8 @@ class MessageController extends GetxController {
       contactNumber.value =
           contact.phones.isNotEmpty ? contact.phones.first.number : '';
     }
+    isServiceOn.value =
+        await firestoreService.checkIfServiceOn(contactNumber.value);
     if (kDebugMode) {
       print(contactName.value);
       print(contactNumber.value);
@@ -31,7 +34,7 @@ class MessageController extends GetxController {
 
   void sendMessage(String message) async {
     try {
-      if (await firestoreService.checkIfServiceOn(contactNumber.value)) {
+      if (isServiceOn.value) {
         String? fcmToken =
             await firestoreService.getFCMToken(contactNumber.value);
 

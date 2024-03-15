@@ -45,25 +45,26 @@ class MessageView extends GetView<MessageController> {
           ),
           Column(
             children: [
-              CustomTileMessagePage(
-                title: "Send Urgent Notification",
-                subTitle:
-                    false ? "Tap to send" : 'User has turned off the services',
-                icon: Icons.notifications_active,
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Send Notification'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomInputFieldMessagePage(
-                                controller: messageController,
-                                hintText: "Enter the message here"),
-                            Obx(
-                              () => Slider(
+              Obx(
+                () => CustomTileMessagePage(
+                  title: "Send Urgent Notification",
+                  subTitle: controller.isServiceOn.value
+                      ? "Tap to send"
+                      : 'User has turned off the services',
+                  icon: Icons.notifications_active,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Send Notification'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CustomInputFieldMessagePage(
+                                  controller: messageController,
+                                  hintText: "Enter the message here"),
+                              Slider(
                                 value: controller.urgencyRatingValue.value
                                     .toDouble(),
                                 min: 1,
@@ -79,35 +80,37 @@ class MessageView extends GetView<MessageController> {
                                         ? 'Medium'
                                         : 'High'),
                               ),
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Low'),
+                                  Text('Medium'),
+                                  Text('High'),
+                                ],
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                controller
+                                    .sendMessage(messageController.text.trim());
+                              },
+                              child: const Text('Send'),
                             ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Low'),
-                                Text('Medium'),
-                                Text('High'),
-                              ],
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Close'),
                             ),
                           ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              controller.sendMessage(messageController.text.trim());
-                            },
-                            child: const Text('Send'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Close'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
               const SizedBox(
                 height: 20,
