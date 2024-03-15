@@ -21,6 +21,7 @@ dependencies:
   app_settings: ^5.1.1
   flutter_phone_direct_caller: ^2.1.1
   http: ^1.2.0
+  audioplayers: ^5.2.1
   
 
 dev_dependencies: 
@@ -30,4 +31,6 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
+  assets:
+    - assets/notification.mp3
 

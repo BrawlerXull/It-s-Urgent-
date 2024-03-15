@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -73,10 +74,20 @@ class LocalNotificationService {
     }
   }
 
+  void playSound() async {
+    final player = AudioPlayer();
+    await player.play(
+        AssetSource(
+          'notification.mp3',
+        ),
+        volume: 1);
+  }
+
   void firebaseInit() {
-    FirebaseMessaging.onMessage.listen((message) {
+    FirebaseMessaging.onMessage.listen((message) async {
       print(message.notification!.title.toString());
       showNotification(message);
+      playSound();
     });
   }
 }
