@@ -42,13 +42,32 @@ class MessageView extends GetView<MessageController> {
         const SizedBox(
           height: 50,
         ),
-        const Column(
+        Column(
           children: [
             CustomTileMessagePage(
               title: "Send Urgent Notification",
               subTitle:
                   false ? "Tap to send" : 'User has turned off the services',
               icon: Icons.notifications_active,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Dialog Title'),
+                      content: Text('Dialog Content'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Close'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
             SizedBox(
               height: 20,
@@ -57,6 +76,7 @@ class MessageView extends GetView<MessageController> {
               title: "Make a phone call",
               subTitle: 'Tap to call!',
               icon: Icons.call,
+              onTap: null,
             ),
             SizedBox(
               height: 20,
@@ -65,6 +85,7 @@ class MessageView extends GetView<MessageController> {
               title: "Chat on WhatsApp",
               subTitle: 'Tap to chat!',
               icon: Icons.chat,
+              onTap: null,
             ),
           ],
         )
