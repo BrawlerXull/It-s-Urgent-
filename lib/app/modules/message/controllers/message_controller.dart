@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class MessageController extends GetxController {
   final RxString contactName = RxString('');
   final RxString contactNumber = RxString('');
+  RxInt urgencyRatingValue = 1.obs;
 
   void initialiseInformation() {
     final dynamic arguments = Get.arguments;
