@@ -93,7 +93,7 @@ class MessageView extends GetView<MessageController> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              controller.sendMessage();
+                              controller.sendMessage(messageController.text.trim());
                             },
                             child: const Text('Send'),
                           ),

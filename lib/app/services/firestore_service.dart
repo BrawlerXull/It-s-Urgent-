@@ -72,7 +72,8 @@ class FirestoreService {
     return userId;
   }
 
-  Future<void> checkIfServiceOn(String phoneNumber) async {
+  Future<bool> checkIfServiceOn(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
       final QuerySnapshot querySnapshot = await _firestore
           .collection('users')
@@ -82,6 +83,7 @@ class FirestoreService {
         final userDocument = querySnapshot.docs.first;
         final bool isServiceOn = userDocument['service'];
         print('Service status for $phoneNumber: $isServiceOn');
+        return isServiceOn;
       } else {
         print('User not found for phone number: $phoneNumber');
       }
@@ -89,14 +91,10 @@ class FirestoreService {
       print('Error checking service status: $e');
       rethrow;
     }
+    return false;
   }
 
-  Future<void> sendMessage(String phoneNumber) async {
-    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
-    checkIfServiceOn(phoneNumber);
-  }
-
-  Future<String?> getFCM(String phoneNumber) async {
+  Future<String?> getFCMToken(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
       final QuerySnapshot querySnapshot = await _firestore
