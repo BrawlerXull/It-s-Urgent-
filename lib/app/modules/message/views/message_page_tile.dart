@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTileMessagePage extends StatelessWidget {
   final String title;
   final String subTitle;
-  const CustomTileMessagePage(
-      {required this.title, required this.subTitle, super.key});
+  final IconData icon;
+  const CustomTileMessagePage({
+    required this.title,
+    required this.subTitle,
+    required this.icon,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +22,25 @@ class CustomTileMessagePage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         width: double.infinity,
         alignment: Alignment.topLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 15),
+            Icon(icon,size: 30),
+            const SizedBox(
+              width: 20,
             ),
-            Text(
-              subTitle,
-              style: const TextStyle(fontSize: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                Text(
+                  subTitle,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
             ),
           ],
         ),

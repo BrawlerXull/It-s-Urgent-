@@ -45,15 +45,18 @@ class MessageView extends GetView<MessageController> {
         const Column(
           children: [
             CustomTileMessagePage(
-                title: "Send Urgent Notification",
-                subTitle:
-                    false ? "Tap to send" : 'User has turned off the services'),
+              title: "Send Urgent Notification",
+              subTitle:
+                  false ? "Tap to send" : 'User has turned off the services',
+              icon: Icons.notifications_active,
+            ),
             SizedBox(
               height: 20,
             ),
             CustomTileMessagePage(
               title: "Make a phone call",
               subTitle: 'Tap to call!',
+              icon: Icons.call,
             ),
             SizedBox(
               height: 20,
@@ -61,6 +64,7 @@ class MessageView extends GetView<MessageController> {
             CustomTileMessagePage(
               title: "Chat on WhatsApp",
               subTitle: 'Tap to chat!',
+              icon: Icons.chat,
             ),
           ],
         )
