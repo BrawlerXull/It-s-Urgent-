@@ -66,21 +66,25 @@ class MessageView extends GetView<MessageController> {
                               CustomInputFieldMessagePage(
                                   controller: messageController,
                                   hintText: "Enter the message here"),
-                              Slider(
-                                value: controller.urgencyRatingValue.value
-                                    .toDouble(),
-                                min: 1,
-                                max: 3,
-                                divisions: 2,
-                                onChanged: (newValue) {
-                                  controller.urgencyRatingValue.value =
-                                      newValue.round();
-                                },
-                                label: controller.urgencyRatingValue.value == 1
-                                    ? 'Low'
-                                    : (controller.urgencyRatingValue.value == 2
-                                        ? 'Medium'
-                                        : 'High'),
+                              Obx(
+                                () => Slider(
+                                  value: controller.urgencyRatingValue.value
+                                      .toDouble(),
+                                  min: 1,
+                                  max: 3,
+                                  divisions: 2,
+                                  onChanged: (newValue) {
+                                    controller.urgencyRatingValue.value =
+                                        newValue.round();
+                                  },
+                                  label: controller.urgencyRatingValue.value ==
+                                          1
+                                      ? 'Low'
+                                      : (controller.urgencyRatingValue.value ==
+                                              2
+                                          ? 'Medium'
+                                          : 'High'),
+                                ),
                               ),
                               const Row(
                                 mainAxisAlignment:
