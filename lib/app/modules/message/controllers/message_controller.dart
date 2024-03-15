@@ -42,8 +42,15 @@ class MessageController extends GetxController {
             await firestoreService.getFCMToken(contactNumber.value);
 
         if (fcmToken != null) {
-          await firebaseNotificaionService.sendMessage(
-              fcmToken, message, getUrgencyStatus(urgencyRatingValue.value));
+          int? urgencyStatus =
+              await firestoreService.getUrgencyStatus(contactNumber.value);
+          if (urgencyStatus != null &&
+              urgencyStatus <= urgencyRatingValue.value) {
+            await firebaseNotificaionService.sendMessage(fcmToken, message,
+                getUrgencyStatusFromRating(urgencyRatingValue.value));
+          } else {
+            print("Urgency too low to send notification.");
+          }
         } else {
           print(
               'FCM token is null for the contact number: ${contactNumber.value}');
@@ -56,7 +63,7 @@ class MessageController extends GetxController {
     }
   }
 
-  String getUrgencyStatus(int rating) {
+  String getUrgencyStatusFromRating(int rating) {
     return rating == 1
         ? 'Low'
         : rating == 2

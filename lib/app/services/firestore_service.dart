@@ -134,4 +134,25 @@ class FirestoreService {
       return null;
     }
   }
+
+  Future<int?> getUrgencyStatus(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final userDocument = querySnapshot.docs.first;
+        return userDocument['urgencyStatus'] as int?;
+      } else {
+        print('User not found for phone number: $phoneNumber');
+        return null;
+      }
+    } catch (e) {
+      print('Error getting urgency status: $e');
+      return null;
+    }
+  }
 }
