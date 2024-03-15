@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:itsurgent/app/modules/message/views/message_page_tile.dart';
 
 import '../controllers/message_controller.dart';
 
@@ -41,90 +42,25 @@ class MessageView extends GetView<MessageController> {
         const SizedBox(
           height: 50,
         ),
-        Column(
+        const Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 246, 246, 246),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                padding: const EdgeInsets.all(15),
-                width: double.infinity,
-                alignment: Alignment.topLeft,
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Send Urgent Notification",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      false
-                          ? "Tap to send"
-                          : 'User has turned off the services',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
+            CustomTileMessagePage(
+                title: "Send Urgent Notification",
+                subTitle:
+                    false ? "Tap to send" : 'User has turned off the services'),
+            SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 246, 246, 246),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                padding: const EdgeInsets.all(15),
-                width: double.infinity,
-                alignment: Alignment.topLeft,
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Make a phone call",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      'Tap to call!',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
+            CustomTileMessagePage(
+              title: "Make a phone call",
+              subTitle: 'Tap to call!',
             ),
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 246, 246, 246),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                padding: const EdgeInsets.all(15),
-                width: double.infinity,
-                alignment: Alignment.topLeft,
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Chat on WhatsApp",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      'Tap to chat!',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
+            CustomTileMessagePage(
+              title: "Chat on WhatsApp",
+              subTitle: 'Tap to chat!',
             ),
           ],
         )
