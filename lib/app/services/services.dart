@@ -4,3 +4,4 @@ export 'firebase_notification_service.dart';
 export 'firestore_service.dart';
 export 'calling_service.dart';
 export 'local_notification_service.dart';
+export 'quick_tiles_service.dart';

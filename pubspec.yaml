@@ -22,6 +22,7 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   http: ^1.2.0
   audioplayers: ^5.2.1
+  quick_settings: ^1.0.1
   
 
 dev_dependencies: 
