@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:itsurgent/app/services/services.dart';
 
 class ProfileController extends GetxController {
+  RxBool switchValue = true.obs;
   late final FirestoreService firestoreService;
   ProfileController() {
     firestoreService = FirestoreService();

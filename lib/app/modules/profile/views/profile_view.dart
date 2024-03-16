@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itsurgent/app/modules/profile/views/profile_page_custom_input_field.dart';
@@ -26,6 +28,7 @@ class ProfileView extends GetView<ProfileController> {
             builder: (context) => AlertDialog(
               title: const Text('Edit Profile'),
               content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomInputFieldProfilePage(
@@ -64,6 +67,20 @@ class ProfileView extends GetView<ProfileController> {
                       ],
                     ),
                   ),
+                  const Text("Service Status"),
+                  Obx(
+                    () => Switch(
+                      value: controller.switchValue.value,
+                      onChanged: (newValue) {
+                        controller.switchValue.value =
+                            !controller.switchValue.value;
+                      },
+                      activeColor: Colors.blue,
+                      inactiveThumbColor: Colors.grey,
+                      activeTrackColor: Colors.lightBlueAccent,
+                      inactiveTrackColor: Colors.grey[400],
+                    ),
+                  )
                 ],
               ),
               actions: [
