@@ -14,7 +14,8 @@ class FirestoreService {
         'name': name,
         'service': true,
         'phoneNumber': phoneNumber,
-        'urgencyStatus': 1
+        'urgencyStatus': 1,
+        'pinService': false
       });
     } catch (e) {
       print('Error saving user data: $e');
@@ -155,6 +156,55 @@ class FirestoreService {
       }
     } catch (e) {
       print('Error getting urgency status: $e');
+      return null;
+    }
+  }
+
+  Future<bool> checkIfPinServiceOn(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        final userDocument = querySnapshot.docs.first;
+        final bool isPinServiceOn = userDocument['pinService'];
+        print('PIN service status for $phoneNumber: $isPinServiceOn');
+        return isPinServiceOn;
+      } else {
+        print('User not found for phone number: $phoneNumber');
+        return false;
+      }
+    } catch (e) {
+      print('Error checking PIN service status: $e');
+      return false;
+    }
+  }
+
+  Future<String?> getPin(String phoneNumber) async {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        final userDocument = querySnapshot.docs.first;
+        final pin = userDocument['pin'] as String?;
+        if (pin != null) {
+          print('PIN retrieved for $phoneNumber: $pin');
+          return pin;
+        } else {
+          print('PIN not found for $phoneNumber');
+          return null;
+        }
+      } else {
+        print('User not found for phone number: $phoneNumber');
+        return null;
+      }
+    } catch (e) {
+      print('Error retrieving PIN: $e');
       return null;
     }
   }

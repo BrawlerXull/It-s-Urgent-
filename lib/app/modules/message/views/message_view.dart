@@ -58,7 +58,7 @@ class MessageView extends GetView<MessageController> {
                     () => CustomTileMessagePage(
                       title: "Send Urgent Notification",
                       subTitle: controller.doesUserExists.value
-                          ? (controller.isServiceOn.value
+                          ? (controller.isUrgencyServiceOn.value
                               ? "Tap to send"
                               : 'User has turned off the services')
                           : 'User does not exist',

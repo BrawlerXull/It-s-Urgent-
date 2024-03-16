@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import 'package:itsurgent/app/routes/app_pages.dart';
 import 'package:itsurgent/app/services/services.dart';
 
 class MessageController extends GetxController {
@@ -9,7 +10,7 @@ class MessageController extends GetxController {
   RxInt urgencyRatingValue = 1.obs;
   late final FirestoreService firestoreService;
   late final FirebaseNotificaionService firebaseNotificaionService;
-  final RxBool isServiceOn = RxBool(false);
+  final RxBool isUrgencyServiceOn = RxBool(false);
   final RxBool doesUserExists = RxBool(false);
 
   MessageController() {
@@ -27,7 +28,7 @@ class MessageController extends GetxController {
     }
     doesUserExists.value =
         await firestoreService.checkIfUserExists(contactNumber.value);
-    isServiceOn.value =
+    isUrgencyServiceOn.value =
         await firestoreService.checkIfServiceOn(contactNumber.value);
     if (kDebugMode) {
       print(contactName.value);
@@ -37,7 +38,7 @@ class MessageController extends GetxController {
 
   void sendMessage(String message) async {
     try {
-      if (isServiceOn.value) {
+      if (isUrgencyServiceOn.value) {
         String? fcmToken =
             await firestoreService.getFCMToken(contactNumber.value);
         if (fcmToken != null) {
@@ -45,11 +46,25 @@ class MessageController extends GetxController {
               await firestoreService.getUrgencyStatus(contactNumber.value);
           if (urgencyStatus != null &&
               urgencyStatus <= urgencyRatingValue.value) {
-            await firebaseNotificaionService.sendMessage(fcmToken, message,
-                getUrgencyStatusFromRating(urgencyRatingValue.value));
-                Get.snackbar('Done !','The notification has be successfully sent');
+            bool isPinServiceOn =
+                await firestoreService.checkIfPinServiceOn(contactNumber.value);
+
+            if (isPinServiceOn) {
+              Get.toNamed(Routes.PIN, arguments: {
+                'message': message,
+                'phoneNumber': contactNumber.value,
+                'fcmToken': fcmToken,
+                'urgencyStatus':
+                    getUrgencyStatusFromRating(urgencyRatingValue.value),
+              });
+            } else {
+              await firebaseNotificaionService.sendMessage(fcmToken, message,
+                  getUrgencyStatusFromRating(urgencyRatingValue.value));
+              Get.snackbar(
+                  'Done !', 'The notification has be successfully sent');
+            }
           } else {
-            Get.snackbar('Error !','User is in more urgent meeting.');
+            Get.snackbar('Error !', 'User is in more urgent meeting.');
             print("Urgency too low to send notification.");
           }
         } else {

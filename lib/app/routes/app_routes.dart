@@ -9,6 +9,7 @@ abstract class Routes {
   static const VERIFY = _Paths.VERIFY;
   static const PROFILE = _Paths.PROFILE;
   static const MESSAGE = _Paths.MESSAGE;
+  static const PIN = _Paths.PIN;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const VERIFY = '/verify';
   static const PROFILE = '/profile';
   static const MESSAGE = '/message';
+  static const PIN = '/pin';
 }
