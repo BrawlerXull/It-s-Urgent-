@@ -50,13 +50,14 @@ class FirestoreService {
   }
 
   Future<void> updateUserData(
-      String newName, String newEmail, int urgencyStatus) async {
+      String newName, String newEmail, int urgencyStatus, bool service) async {
     final userId = _getCurrentUserId();
     try {
       await _firestore.collection('users').doc(userId).update({
         'name': newName,
         'email': newEmail,
         'urgencyStatus': urgencyStatus,
+        'service': service
       });
     } catch (e) {
       print('Error updating user data: $e');

@@ -33,5 +33,5 @@ dev_dependencies:
 flutter: 
   uses-material-design: true
   assets:
-    - assets/notification.mp3
+    - assets/ok.mp3
 

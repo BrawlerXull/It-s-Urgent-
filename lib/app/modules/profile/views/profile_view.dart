@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itsurgent/app/modules/profile/views/profile_page_custom_input_field.dart';
@@ -93,9 +91,11 @@ class ProfileView extends GetView<ProfileController> {
                 TextButton(
                   onPressed: () {
                     controller.updateUserData(
-                        nameController.text.trim(),
-                        emailController.text.trim(),
-                        controller.urgencyStatus.value);
+                      nameController.text.trim(),
+                      emailController.text.trim(),
+                      controller.urgencyStatus.value,
+                      controller.switchValue.value,
+                    );
                     Get.back();
                   },
                   child: const Text('Save'),

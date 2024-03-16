@@ -32,9 +32,9 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUserData(
-      String newName, String newEmail, int urgencyStatus) async {
+      String newName, String newEmail, int urgencyStatus , bool service) async {
     try {
-      await firestoreService.updateUserData(newName, newEmail, urgencyStatus);
+      await firestoreService.updateUserData(newName, newEmail, urgencyStatus , service);
       name.value = newName;
       email.value = newEmail;
     } catch (e) {
