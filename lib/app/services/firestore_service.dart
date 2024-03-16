@@ -10,10 +10,12 @@ class FirestoreService {
   Future<void> saveUserData(
       String userId, String name, String phoneNumber) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .set({'name': name, 'service': true, 'phoneNumber': phoneNumber});
+      await _firestore.collection('users').doc(userId).set({
+        'name': name,
+        'service': true,
+        'phoneNumber': phoneNumber,
+        'urgencyStatus': 1
+      });
     } catch (e) {
       print('Error saving user data: $e');
       rethrow;
