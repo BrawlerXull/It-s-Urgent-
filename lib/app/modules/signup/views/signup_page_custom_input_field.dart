@@ -26,8 +26,6 @@ class _SignUpPageCustomInputFieldState extends State<SignUpPageCustomInputField>
         obscureText: widget.obsecure ? !_isPasswordVisible : false,
         controller: widget.controller,
         decoration: InputDecoration(
-          fillColor: Colors.grey[200],
-          filled: true,
           suffixIcon: widget.title == "Password"
               ? IconButton(
                   icon: Icon(
@@ -42,8 +40,6 @@ class _SignUpPageCustomInputFieldState extends State<SignUpPageCustomInputField>
                   },
                 )
               : null,
-          focusColor: Colors.grey[200],
-          hoverColor: Colors.grey[200],
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),

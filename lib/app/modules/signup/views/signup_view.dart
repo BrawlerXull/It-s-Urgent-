@@ -13,7 +13,6 @@ class SignupView extends GetView<SignupController> {
     final TextEditingController nameController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -56,7 +55,6 @@ class SignupView extends GetView<SignupController> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff200589),
-                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ),
