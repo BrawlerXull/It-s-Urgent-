@@ -23,13 +23,10 @@ class MessageController extends GetxController {
     if (arguments != null && arguments['contact'] != null) {
       final Contact contact = arguments['contact'];
       contactName.value = contact.displayName;
-      contactNumber.value =
-          contact.phones.isNotEmpty ? contact.phones.first.number : '';
+      contactNumber.value = contact.phones.isNotEmpty ? contact.phones.first.number : '';
     }
-    doesUserExists.value =
-        await firestoreService.checkIfUserExists(contactNumber.value);
-    isUrgencyServiceOn.value =
-        await firestoreService.checkIfServiceOn(contactNumber.value);
+    doesUserExists.value = await firestoreService.checkIfUserExists(contactNumber.value);
+    isUrgencyServiceOn.value = await firestoreService.checkIfServiceOn(contactNumber.value);
     if (kDebugMode) {
       print(contactName.value);
       print(contactNumber.value);
@@ -39,37 +36,30 @@ class MessageController extends GetxController {
   void sendMessage(String message) async {
     try {
       if (isUrgencyServiceOn.value) {
-        String? fcmToken =
-            await firestoreService.getFCMToken(contactNumber.value);
+        String? fcmToken = await firestoreService.getFCMToken(contactNumber.value);
         if (fcmToken != null) {
-          int? urgencyStatus =
-              await firestoreService.getUrgencyStatus(contactNumber.value);
-          if (urgencyStatus != null &&
-              urgencyStatus <= urgencyRatingValue.value) {
-            bool isPinServiceOn =
-                await firestoreService.checkIfPinServiceOn(contactNumber.value);
+          int? urgencyStatus = await firestoreService.getUrgencyStatus(contactNumber.value);
+          if (urgencyStatus != null && urgencyStatus <= urgencyRatingValue.value) {
+            bool isPinServiceOn = await firestoreService.checkIfPinServiceOn(contactNumber.value);
 
             if (isPinServiceOn) {
               Get.toNamed(Routes.PIN, arguments: {
                 'message': message,
                 'phoneNumber': contactNumber.value,
                 'fcmToken': fcmToken,
-                'urgencyStatus':
-                    getUrgencyStatusFromRating(urgencyRatingValue.value),
+                'urgencyStatus': getUrgencyStatusFromRating(urgencyRatingValue.value),
               });
             } else {
-              await firebaseNotificaionService.sendMessage(fcmToken, message,
-                  getUrgencyStatusFromRating(urgencyRatingValue.value));
-              Get.snackbar(
-                  'Done !', 'The notification has be successfully sent');
+              await firebaseNotificaionService.sendMessage(
+                  fcmToken, message, getUrgencyStatusFromRating(urgencyRatingValue.value));
+              Get.snackbar('Done !', 'The notification has be successfully sent');
             }
           } else {
             Get.snackbar('Error !', 'User is in more urgent meeting.');
             print("Urgency too low to send notification.");
           }
         } else {
-          print(
-              'FCM token is null for the contact number: ${contactNumber.value}');
+          print('FCM token is null for the contact number: ${contactNumber.value}');
         }
       }
     } catch (e) {
@@ -85,6 +75,10 @@ class MessageController extends GetxController {
         : rating == 2
             ? 'Medium'
             : 'High';
+  }
+
+  void addToBlockList() async {
+    await firestoreService.addToBlockList(contactNumber.value);
   }
 
   @override

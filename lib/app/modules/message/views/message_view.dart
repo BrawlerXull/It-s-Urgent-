@@ -147,6 +147,15 @@ class MessageView extends GetView<MessageController> {
                     icon: Icons.chat,
                     onTap: null,
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTileMessagePage(
+                    title: "Block the user",
+                    subTitle: 'Tap to block!',
+                    icon: Icons.block,
+                    onTap: controller.addToBlockList,
+                  ),
                 ],
               )
 

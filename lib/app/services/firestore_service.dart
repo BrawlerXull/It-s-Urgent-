@@ -7,16 +7,12 @@ class FirestoreService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> saveUserData(
-      String userId, String name, String phoneNumber) async {
+  Future<void> saveUserData(String userId, String name, String phoneNumber) async {
     try {
-      await _firestore.collection('users').doc(userId).set({
-        'name': name,
-        'service': true,
-        'phoneNumber': phoneNumber,
-        'urgencyStatus': 1,
-        'pinService': false
-      });
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .set({'name': name, 'service': true, 'phoneNumber': phoneNumber, 'urgencyStatus': 1, 'pinService': false});
     } catch (e) {
       print('Error saving user data: $e');
       rethrow;
@@ -39,8 +35,7 @@ class FirestoreService {
   Future<Map<String, dynamic>> getUserData() async {
     final userId = _getCurrentUserId();
     try {
-      final userSnapshot =
-          await _firestore.collection('users').doc(userId).get();
+      final userSnapshot = await _firestore.collection('users').doc(userId).get();
       if (userSnapshot.exists) {
         return userSnapshot.data() as Map<String, dynamic>;
       } else {
@@ -52,16 +47,13 @@ class FirestoreService {
     }
   }
 
-  Future<void> updateUserData(
-      String newName, String newEmail, int urgencyStatus, bool service) async {
+  Future<void> updateUserData(String newName, String newEmail, int urgencyStatus, bool service) async {
     final userId = _getCurrentUserId();
     try {
-      await _firestore.collection('users').doc(userId).update({
-        'name': newName,
-        'email': newEmail,
-        'urgencyStatus': urgencyStatus,
-        'service': service
-      });
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .update({'name': newName, 'email': newEmail, 'urgencyStatus': urgencyStatus, 'service': service});
     } catch (e) {
       print('Error updating user data: $e');
       rethrow;
@@ -79,10 +71,8 @@ class FirestoreService {
   Future<bool> checkIfServiceOn(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
       if (querySnapshot.docs.isNotEmpty) {
         final userDocument = querySnapshot.docs.first;
         final bool isServiceOn = userDocument['service'];
@@ -101,10 +91,8 @@ class FirestoreService {
   Future<bool> checkIfUserExists(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
@@ -116,10 +104,8 @@ class FirestoreService {
   Future<String?> getFCMToken(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
       if (querySnapshot.docs.isNotEmpty) {
         final userDocument = querySnapshot.docs.first;
         final fcmToken = userDocument['fcmToken'] as String?;
@@ -142,10 +128,8 @@ class FirestoreService {
   Future<int?> getUrgencyStatus(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
 
       if (querySnapshot.docs.isNotEmpty) {
         final userDocument = querySnapshot.docs.first;
@@ -163,10 +147,8 @@ class FirestoreService {
   Future<bool> checkIfPinServiceOn(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
       if (querySnapshot.docs.isNotEmpty) {
         final userDocument = querySnapshot.docs.first;
         final bool isPinServiceOn = userDocument['pinService'];
@@ -185,10 +167,8 @@ class FirestoreService {
   Future<String?> getPin(String phoneNumber) async {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s+'), '');
     try {
-      final QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
-          .get();
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('phoneNumber', isEqualTo: phoneNumber).get();
       if (querySnapshot.docs.isNotEmpty) {
         final userDocument = querySnapshot.docs.first;
         final pin = userDocument['pin'] as String?;
@@ -206,6 +186,38 @@ class FirestoreService {
     } catch (e) {
       print('Error retrieving PIN: $e');
       return null;
+    }
+  }
+
+  Future<void> addToBlockList(String phoneNumber) async {
+    final userId = _getCurrentUserId();
+    try {
+      final DocumentReference userDocRef = _firestore.collection('users').doc(userId);
+
+      await _firestore.runTransaction((transaction) async {
+        final DocumentSnapshot snapshot = await transaction.get(userDocRef);
+        final userData = snapshot.data() as Map<String, dynamic>?;
+        if (userData != null) {
+          List<dynamic>? blockList = userData['blockList'] as List<dynamic>?;
+          if (blockList == null) {
+            blockList = [phoneNumber];
+          } else {
+            if (!blockList.contains(phoneNumber)) {
+              blockList.add(phoneNumber);
+            } else {
+              print('Phone number already exists in blockList.');
+            }
+          }
+          transaction.update(userDocRef, {'blockList': blockList});
+        } else {
+          print('User document does not exist.');
+        }
+      });
+
+      print('Phone number added to blockList: $phoneNumber');
+    } catch (e) {
+      print('Error adding phone number to blockList: $e');
+      rethrow;
     }
   }
 }
