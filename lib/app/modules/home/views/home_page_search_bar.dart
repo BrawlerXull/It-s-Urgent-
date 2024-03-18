@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 class SearchBarHomePage extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  const SearchBarHomePage(
-      {required this.controller, required this.hintText, super.key});
+  const SearchBarHomePage({required this.controller, required this.hintText, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class SearchBarHomePage extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-    contentPadding: const EdgeInsets.all(10.0),
+          contentPadding: const EdgeInsets.all(10.0),
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),

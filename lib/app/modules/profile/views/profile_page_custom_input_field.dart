@@ -20,10 +20,6 @@ class CustomInputFieldProfilePage extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10.0),
-          fillColor: Colors.grey[200],
-          filled: true,
-          focusColor: Colors.grey[200],
-          hoverColor: Colors.grey[200],
           labelText: labelText,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
