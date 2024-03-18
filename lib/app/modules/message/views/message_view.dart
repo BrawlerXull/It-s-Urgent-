@@ -22,9 +22,6 @@ class MessageView extends GetView<MessageController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
               Column(
                 children: [
                   Align(
@@ -155,6 +152,15 @@ class MessageView extends GetView<MessageController> {
                     subTitle: 'Tap to block!',
                     icon: Icons.block,
                     onTap: controller.addToBlockList,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const CustomTileMessagePage(
+                    title: "Report ther user",
+                    subTitle: 'Tap to report!',
+                    icon: Icons.report,
+                    onTap: null,
                   ),
                 ],
               )
