@@ -73,10 +73,6 @@ class ProfileView extends GetView<ProfileController> {
                         controller.switchValue.value =
                             !controller.switchValue.value;
                       },
-                      activeColor: Colors.blue,
-                      inactiveThumbColor: Colors.grey,
-                      activeTrackColor: Colors.lightBlueAccent,
-                      inactiveTrackColor: Colors.grey[400],
                     ),
                   )
                 ],

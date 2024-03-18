@@ -22,7 +22,6 @@ class ProfilePageInfoTile extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(width: 2.0),
               borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
