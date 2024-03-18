@@ -54,7 +54,7 @@ class SignupView extends GetView<SignupController> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff200589),
+                        backgroundColor: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ),
@@ -64,7 +64,8 @@ class SignupView extends GetView<SignupController> {
                         controller.name.value = nameController.text;
                         controller.sendOtp();
                       },
-                      child: const Text('Send OTP'),
+                      child: const Text('Send OTP',
+                      style: TextStyle(color: Colors.white),),
                     ),
                   ],
                 ),
