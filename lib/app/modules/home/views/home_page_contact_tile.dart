@@ -18,24 +18,27 @@ class ContactTileHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(contact.displayName),
-      subtitle: Text(contact.phones.first.number),
-      leading: CircleAvatar(
-        backgroundColor: const Color.fromARGB(255, 57, 142, 208),
-        child: Text(
-          contact.displayName[0],
-          style: const TextStyle(color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: ListTile(
+        title: Text(contact.displayName),
+        subtitle: Text(contact.phones.first.number),
+        leading: CircleAvatar(
+          backgroundColor: const Color.fromARGB(255, 57, 142, 208),
+          child: Text(
+            contact.displayName[0],
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
+        trailing: GestureDetector(
+          onTap: onTap,
+          child: const Icon(Icons.call),
+        ),
+        onTap: () {
+          print("ok");
+          Get.toNamed(Routes.MESSAGE, arguments: {'contact': contact});
+        },
       ),
-      trailing: GestureDetector(
-        onTap: onTap,
-        child: const Icon(Icons.call),
-      ),
-      onTap: () {
-        print("ok");
-        Get.toNamed(Routes.MESSAGE, arguments: {'contact': contact});
-      },
     );
   }
 }
