@@ -58,7 +58,15 @@ class MessageView extends GetView<MessageController> {
                           : 'User does not exist',
                       icon: Icons.notifications_active,
                       onTap: () {
-                        showNotificationDialog(context, messageController, controller);
+                        if (controller.doesUserExists.value) {
+                          if (controller.isUrgencyServiceOn.value) {
+                            showNotificationDialog(context, messageController, controller);
+                          } else {
+                            Get.snackbar("Unable to send message", "User has turned off the services");
+                          }
+                        } else {
+                          Get.snackbar("Unable to send message", "User does not exist");
+                        }
                       },
                     ),
                   ),
