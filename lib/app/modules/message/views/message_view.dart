@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:itsurgent/app/modules/message/views/message_page_custom_input_field.dart';
+import 'package:itsurgent/app/modules/message/views/message_page_alert_dialog.dart';
 import 'package:itsurgent/app/modules/message/views/message_page_tile.dart';
 import '../controllers/message_controller.dart';
 
@@ -30,8 +30,7 @@ class MessageView extends GetView<MessageController> {
                       backgroundColor: const Color(0xFFA5D8FF),
                       child: Text(
                         controller.contactName.value[0],
-                        style:
-                            const TextStyle(fontSize: 70, color: Colors.black),
+                        style: const TextStyle(fontSize: 70, color: Colors.black),
                       ),
                     ),
                   ),
@@ -55,74 +54,11 @@ class MessageView extends GetView<MessageController> {
                     () => CustomTileMessagePage(
                       title: "Send Urgent Notification",
                       subTitle: controller.doesUserExists.value
-                          ? (controller.isUrgencyServiceOn.value
-                              ? "Tap to send"
-                              : 'User has turned off the services')
+                          ? (controller.isUrgencyServiceOn.value ? "Tap to send" : 'User has turned off the services')
                           : 'User does not exist',
                       icon: Icons.notifications_active,
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Send Notification'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomInputFieldMessagePage(
-                                      controller: messageController,
-                                      hintText: "Enter the message here"),
-                                  Obx(
-                                    () => Slider(
-                                      value: controller.urgencyRatingValue.value
-                                          .toDouble(),
-                                      min: 1,
-                                      max: 3,
-                                      divisions: 2,
-                                      onChanged: (newValue) {
-                                        controller.urgencyRatingValue.value =
-                                            newValue.round();
-                                      },
-                                      label:
-                                          controller.urgencyRatingValue.value ==
-                                                  1
-                                              ? 'Low'
-                                              : (controller.urgencyRatingValue
-                                                          .value ==
-                                                      2
-                                                  ? 'Medium'
-                                                  : 'High'),
-                                    ),
-                                  ),
-                                  const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Low'),
-                                      Text('Medium'),
-                                      Text('High'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    controller.sendMessage(
-                                        messageController.text.trim());
-                                  },
-                                  child: const Text('Send'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Close'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        showNotificationDialog(context, messageController, controller);
                       },
                     ),
                   ),
@@ -164,22 +100,6 @@ class MessageView extends GetView<MessageController> {
                   ),
                 ],
               )
-
-              // Row(
-              //   children: [
-              //     RawMaterialButton(
-              //       onPressed: () {},
-              //       padding: const EdgeInsets.all(15.0),
-              //       shape: const CircleBorder(
-              //         side: BorderSide(color: Colors.black, width: 2.0),
-              //       ),
-              //       child: const Icon(
-              //         Icons.call,
-              //         size: 35.0,
-              //       ),
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ));
