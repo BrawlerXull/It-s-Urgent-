@@ -15,14 +15,16 @@ class CustomTileMessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDarkMode
+        ? Colors.grey[800] 
+        : const Color.fromARGB(255, 246, 246, 246);
     return GestureDetector(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 246, 246, 246),
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+          decoration: BoxDecoration(color: backgroundColor, borderRadius: const BorderRadius.all(Radius.circular(20))),
           padding: const EdgeInsets.all(15),
           width: double.infinity,
           alignment: Alignment.topLeft,
