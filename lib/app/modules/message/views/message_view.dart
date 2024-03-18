@@ -56,7 +56,11 @@ class MessageView extends GetView<MessageController> {
                       subTitle: controller.doesUserExists.value
                           ? (controller.isUrgencyServiceOn.value ? "Tap to send" : 'User has turned off the services')
                           : 'User does not exist',
-                      icon: Icons.notifications_active,
+                      icon: controller.doesUserExists.value
+                          ? controller.isUrgencyServiceOn.value
+                              ? Icons.notifications_active
+                              : Icons.error
+                          : Icons.error,
                       onTap: () {
                         if (controller.doesUserExists.value) {
                           if (controller.isUrgencyServiceOn.value) {
