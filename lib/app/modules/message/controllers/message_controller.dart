@@ -78,7 +78,7 @@ class MessageController extends GetxController {
   }
 
   void addToBlockList() async {
-    await firestoreService.addToBlockList(contactNumber.value);
+    // await firestoreService.addToBlockList(contactNumber.value);
   }
 
   @override
