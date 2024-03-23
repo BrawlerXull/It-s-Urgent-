@@ -60,7 +60,7 @@ class DesktopSignupView extends GetView<DesktopSignupController> {
                         backgroundColor: Colors.green.shade600,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
-                      // controller.verifyOtp();
+                      controller.verifySecrectCode();
                     },
                     child: const Text(
                       "Verify Secret Code",

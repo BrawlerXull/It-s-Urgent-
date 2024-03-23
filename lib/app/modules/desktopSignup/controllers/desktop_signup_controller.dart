@@ -1,23 +1,14 @@
 import 'package:get/get.dart';
+import 'package:itsurgent/app/services/firestore_service.dart';
 
 class DesktopSignupController extends GetxController {
-  //TODO: Implement DesktopSignupController
+  late final FirestoreService firestoreService;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  DesktopSignupController() {
+    firestoreService = FirestoreService();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
+  void verifySecrectCode() async {
+    print("ok");
+    print(await firestoreService.verifySecretCode('cccccc'));
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

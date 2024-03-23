@@ -16,7 +16,7 @@ void main() async {
   // quickTileService.initQuickTile();
 
   User? user = FirebaseAuth.instance.currentUser;
-  
+
   String initialRoute = user != null ? Routes.HOME : Routes.SIGNUP;
 
 
