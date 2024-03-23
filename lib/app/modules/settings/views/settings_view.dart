@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:itsurgent/app/modules/settings/views/settings_page_tile.dart';
 
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SettingsView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'SettingsView is working',
-          style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          title: const Text('SettingsView'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: const Column(
+          children: [
+            CustomTileSettingsPage(
+              title: "Get Secret Code",
+              subTitle: 'Tap to get Secret Code',
+              onTap: null,
+            ),
+          ],
+        ));
   }
 }

@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,6 +15,7 @@ class FirestoreService {
           .collection('users')
           .doc(userId)
           .set({'name': name, 'service': true, 'phoneNumber': phoneNumber, 'urgencyStatus': 1, 'pinService': false});
+      generateAndSetSecretCode();
     } catch (e) {
       print('Error saving user data: $e');
       rethrow;
@@ -197,13 +200,75 @@ class FirestoreService {
         print(querySnapshot.docs.first['name']);
         return true;
       } else {
-
         print('No documents found matching the secret code.');
         return false;
       }
     } catch (e) {
       print('Error verifying secret code: $e');
       throw e;
+    }
+  }
+
+  Future<void> generateAndSetSecretCode() async {
+    final String userId = _getCurrentUserId();
+
+    final existingSecretCode = await _getExistingSecretCode();
+    if (existingSecretCode != null) {
+      print('Secret code already exists: $existingSecretCode');
+      return;
+    }
+
+    final String newSecretCode = await _generateUniqueRandomString();
+    try {
+      await _firestore.collection('users').doc(userId).update({'secretCode': newSecretCode});
+    } catch (e) {
+      print('Error setting secret code: $e');
+      rethrow;
+    }
+  }
+
+  Future<String?> _getExistingSecretCode() async {
+    try {
+      final String userId = _getCurrentUserId();
+      final DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userId).get();
+      if (userSnapshot.exists) {
+        final Map<String, dynamic>? data = userSnapshot.data() as Map<String, dynamic>?;
+        if (data != null && data.containsKey('secretCode')) {
+          return data['secretCode'] as String?;
+        }
+      }
+      return null;
+    } catch (e) {
+      print('Error getting existing secret code: $e');
+      return null;
+    }
+  }
+
+  Future<String> _generateUniqueRandomString() async {
+    final random = Random();
+    String randomString = '';
+    for (int i = 0; i < 6; i++) {
+      randomString += random.nextInt(10).toString();
+    }
+
+    while (await _checkIfSecretCodeExists(randomString)) {
+      randomString = '';
+      for (int i = 0; i < 6; i++) {
+        randomString += random.nextInt(10).toString();
+      }
+    }
+
+    return randomString;
+  }
+
+  Future<bool> _checkIfSecretCodeExists(String secretCode) async {
+    try {
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('users').where('secretCode', isEqualTo: secretCode).get();
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking if secret code exists: $e');
+      return true;
     }
   }
 }
