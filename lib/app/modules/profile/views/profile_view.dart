@@ -6,6 +6,7 @@ import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
@@ -25,20 +26,31 @@ class ProfileView extends GetView<ProfileController> {
         },
         child: const Icon(Icons.edit),
       ),
-      body: Obx(
-        () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Align(
-              child: Icon(
-                Icons.person,
-                size: 80,
+      body: FutureBuilder(
+        future: controller.fetchUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            return Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Align(
+                    child: Icon(
+                      Icons.person,
+                      size: 80,
+                    ),
+                  ),
+                  ProfilePageInfoTile(title: "Name", value: controller.name.value),
+                  ProfilePageInfoTile(title: "Email", value: controller.email.value),
+                ],
               ),
-            ),
-            ProfilePageInfoTile(title: "Name", value: controller.name.value),
-            ProfilePageInfoTile(title: "Email", value: controller.email.value),
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }
