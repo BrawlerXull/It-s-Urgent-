@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/desktopSignup/bindings/desktop_signup_binding.dart';
+import '../modules/desktopSignup/views/desktop_signup_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/message/bindings/message_binding.dart';
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.PIN,
       page: () => const PinView(),
       binding: PinBinding(),
+    ),
+    GetPage(
+      name: _Paths.DESKTOP_SIGNUP,
+      page: () => const DesktopSignupView(),
+      binding: DesktopSignupBinding(),
     ),
   ];
 }

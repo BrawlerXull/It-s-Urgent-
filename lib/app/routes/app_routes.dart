@@ -10,6 +10,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const MESSAGE = _Paths.MESSAGE;
   static const PIN = _Paths.PIN;
+  static const DESKTOP_SIGNUP = _Paths.DESKTOP_SIGNUP;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const MESSAGE = '/message';
   static const PIN = '/pin';
+  static const DESKTOP_SIGNUP = '/desktop-signup';
 }

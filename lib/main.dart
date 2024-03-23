@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itsurgent/app/theme/custom_theme.dart';
-// import 'package:itsurgent/app/services/services.dart';
+import 'package:itsurgent/app/utils/consts.dart';
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
 
@@ -16,12 +16,15 @@ void main() async {
   // quickTileService.initQuickTile();
 
   User? user = FirebaseAuth.instance.currentUser;
+  
+  String initialRoute = user != null ? Routes.HOME : Routes.SIGNUP;
+
 
   runApp(
     SafeArea(
       child: GetMaterialApp(
         title: "Application",
-        initialRoute: user != null ? Routes.HOME : Routes.SIGNUP,
+        initialRoute: kIsDesktop ? Routes.DESKTOP_SIGNUP : initialRoute,
         getPages: AppPages.routes,
         theme: lightTheme,
         darkTheme: darkTheme,
