@@ -10,6 +10,8 @@ import '../modules/pin/bindings/pin_binding.dart';
 import '../modules/pin/views/pin_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.DESKTOP_SIGNUP,
       page: () => const DesktopSignupView(),
       binding: DesktopSignupBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

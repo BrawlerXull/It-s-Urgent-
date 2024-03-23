@@ -29,11 +29,17 @@ class HomeView extends GetView<HomeController> {
                 },
               ),
               IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Get.toNamed(Routes.SETTINGS);
+                },
+              ),
+              IconButton(
                 icon: const Icon(Icons.exit_to_app),
                 onPressed: () {
                   controller.signOut();
                 },
-              )
+              ),
             ],
             automaticallyImplyLeading: false,
           ),
@@ -47,8 +53,7 @@ class HomeView extends GetView<HomeController> {
               }
               return Column(
                 children: [
-                  SearchBarHomePage(
-                      controller: searchController, hintText: "Search here"),
+                  SearchBarHomePage(controller: searchController, hintText: "Search here"),
                   Expanded(
                     child: ListView.builder(
                       itemCount: controller.contacts!.length,
