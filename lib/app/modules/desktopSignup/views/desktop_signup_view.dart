@@ -18,8 +18,9 @@ class DesktopSignupView extends GetView<DesktopSignupController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(Icons.key,size: 150,color: Colors.grey[400],),
               const SizedBox(
-                height: 25,
+                height: 10,
               ),
               const Text(
                 "Enter the secret code!",
