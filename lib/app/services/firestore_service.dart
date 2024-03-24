@@ -271,4 +271,29 @@ class FirestoreService {
       return true;
     }
   }
+
+  Future<String?> getSecretCode() async {
+    final String userId = _getCurrentUserId();
+
+    try {
+      final DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userId).get();
+
+      if (userSnapshot.exists) {
+        final Map<String, dynamic>? data = userSnapshot.data() as Map<String, dynamic>?;
+
+        if (data != null && data.containsKey('secretCode')) {
+          return data['secretCode'] as String?;
+        } else {
+          print('Secret code not found for current user.');
+          return null;
+        }
+      } else {
+        print('User document does not exist for current user.');
+        return null;
+      }
+    } catch (e) {
+      print('Error getting secret code: $e');
+      return null;
+    }
+  }
 }

@@ -1,23 +1,15 @@
 import 'package:get/get.dart';
+import 'package:itsurgent/app/services/firestore_service.dart';
 
 class SettingsController extends GetxController {
-  //TODO: Implement SettingsController
+  RxString secretCode = ''.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  late final FirestoreService firestoreService;
+  SettingsController() {
+    firestoreService = FirestoreService();
+    getSecretCode();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
+  void getSecretCode() async {
+    secretCode.value = (await firestoreService.getSecretCode())!;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

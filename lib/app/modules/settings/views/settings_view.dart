@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:itsurgent/app/modules/settings/views/settings_page_tile.dart';
@@ -14,12 +15,39 @@ class SettingsView extends GetView<SettingsController> {
           title: const Text('SettingsView'),
           centerTitle: true,
         ),
-        body: const Column(
+        body: Column(
           children: [
+            const SizedBox(height: 20,),
             CustomTileSettingsPage(
               title: "Get Secret Code",
               subTitle: 'Tap to get Secret Code',
-              onTap: null,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Secret Key'),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(
+                          () => Text(
+                            controller.secretCode.value,
+                            style: const TextStyle(fontSize: 30),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.copy),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: controller.secretCode.value));
+                            Get.snackbar('Copied to Clipboard', '');
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ));
