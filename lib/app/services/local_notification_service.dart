@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -6,13 +7,13 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 @pragma("vm:entry-point")
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  playSound();
+  await playSound();
   print("Title: ${message.notification?.title}");
   print("Body: ${message.notification?.body}");
 }
 
 @pragma("vm:entry-point")
-void playSound() async {
+Future<void> playSound() async {
   final player = AudioPlayer();
   await player.play(
       AssetSource(
@@ -55,14 +56,14 @@ class LocalNotificationService {
         importance: Importance.max,
       );
       AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-        channel.id.toString(),
-        channel.name.toString(),
-        channelDescription: "Channel Description",
-        importance: Importance.high,
-        priority: Priority.high,
-        ticker: 'ticker',
-        icon: "@mipmap/ic_launcher",
-      );
+          channel.id.toString(), channel.name.toString(),
+          channelDescription: "Channel Description",
+          importance: Importance.high,
+          priority: Priority.high,
+          sound: const RawResourceAndroidNotificationSound('notification'),
+          ticker: 'ticker',
+          icon: "@mipmap/ic_launcher",
+          playSound: true);
 
       DarwinNotificationDetails darwinNotificationDetails = const DarwinNotificationDetails(
         presentAlert: true,
@@ -91,7 +92,7 @@ class LocalNotificationService {
     FirebaseMessaging.onMessage.listen((message) async {
       print(message.notification!.title.toString());
       showNotification(message);
-      playSound();
+      await playSound();
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
   }
