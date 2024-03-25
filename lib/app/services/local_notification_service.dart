@@ -4,12 +4,14 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+@pragma("vm:entry-point")
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   playSound();
   print("Title: ${message.notification?.title}");
   print("Body: ${message.notification?.body}");
 }
 
+@pragma("vm:entry-point")
 void playSound() async {
   final player = AudioPlayer();
   await player.play(
