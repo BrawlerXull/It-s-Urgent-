@@ -29,15 +29,10 @@ class FirebaseNotificaionService {
     }
   }
 
-  Future<void> sendMessage(
-      String fcmToken, String message, String urgencyStatus) async {
+  Future<void> sendMessage(String fcmToken, String message, String urgencyStatus) async {
     var data = {
       'to': fcmToken,
-      'notification': {
-        'title': message,
-        'body': urgencyStatus,
-        "sound": "jetsons_doorbell.mp3"
-      },
+      'notification': {'title': message, 'body': urgencyStatus, "sound": "jetsons_doorbell.mp3"},
       'android': {
         'notification': {
           'notification_count': 23,
