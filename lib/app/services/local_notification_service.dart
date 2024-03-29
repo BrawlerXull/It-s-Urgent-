@@ -13,7 +13,7 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Body: ${message.notification?.body}");
 }
 
-
+@pragma("vm:entry-point")
 Future<void> playSound() async {
   adjustVolume();
   final player = AudioPlayer();
@@ -25,7 +25,7 @@ Future<void> playSound() async {
   );
 }
 
-
+@pragma("vm:entry-point")
 Future<void> adjustVolume() async {
   VolumeController().showSystemUI = false;
   double getVolume = await VolumeController().getVolume();
