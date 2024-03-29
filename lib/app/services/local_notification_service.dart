@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 @pragma("vm:entry-point")
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
@@ -12,14 +13,25 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Body: ${message.notification?.body}");
 }
 
-@pragma("vm:entry-point")
+
 Future<void> playSound() async {
+  adjustVolume();
   final player = AudioPlayer();
   await player.play(
-      AssetSource(
-        'notification.mp3',
-      ),
-      volume: 1);
+    AssetSource(
+      'notification.mp3',
+    ),
+    volume: 1,
+  );
+}
+
+
+Future<void> adjustVolume() async {
+  VolumeController().showSystemUI = false;
+  double getVolume = await VolumeController().getVolume();
+  VolumeController().setVolume(1);
+  await Future.delayed(const Duration(seconds: 2));
+  VolumeController().setVolume(getVolume);
 }
 
 class LocalNotificationService {
@@ -56,14 +68,16 @@ class LocalNotificationService {
         importance: Importance.max,
       );
       AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-          channel.id.toString(), channel.name.toString(),
-          channelDescription: "Channel Description",
-          importance: Importance.high,
-          priority: Priority.high,
-          sound: const RawResourceAndroidNotificationSound('notification'),
-          ticker: 'ticker',
-          icon: "@mipmap/ic_launcher",
-          playSound: true);
+        channel.id.toString(), channel.name.toString(),
+        channelDescription: "Channel Description",
+        importance: Importance.high,
+        priority: Priority.high,
+        // Uncomment the below lines to play notification sound
+        // sound: const RawResourceAndroidNotificationSound('notification'),
+        // playSound: true,
+        ticker: 'ticker',
+        icon: "@mipmap/ic_launcher",
+      );
 
       DarwinNotificationDetails darwinNotificationDetails = const DarwinNotificationDetails(
         presentAlert: true,

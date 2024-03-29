@@ -23,6 +23,7 @@ dependencies:
   http: ^1.2.0
   audioplayers: ^5.2.1
   quick_settings: ^1.0.1
+  volume_controller: ^2.0.7
   
 
 dev_dependencies: 
